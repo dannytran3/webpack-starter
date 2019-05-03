@@ -1,0 +1,13 @@
+// custom variables here
+// override bootstrap variables in vendor/bootstrap-custom
+
+$primary-color: #474747;
+$bg: #1f57a1;
+
+.btn{
+    background-color: #b30cb3;
+    margin: 0 2rem;
+    display: grid;
+    transition: all .5s;
+    user-select: none;
+}
