@@ -56,13 +56,45 @@ const config = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
+                test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
                             outputPath: 'images'
+                        }
+                    },
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            },
+                            // optipng.enabled: false will disable optipng
+                            optipng: {
+                                enabled: false
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: false
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts'
                         }
                     }
                 ]
@@ -73,8 +105,12 @@ const config = {
                     {
                         loader: 'handlebars-loader',
                         options: {
-                            partialDirs: [path.join(__dirname, 'src/html', 'partials')],
-                            helperDirs: [path.join(__dirname, 'src/js', 'helpers')]
+                            partialDirs: [
+                                path.join(__dirname, 'src/html', 'partials')
+                            ],
+                            helperDirs: [
+                                path.join(__dirname, 'src/js', 'helpers')
+                            ]
                         }
                     }
                 ]
@@ -82,11 +118,6 @@ const config = {
         ]
     },
     plugins: [
-        // new HtmlWebpackPlugin({
-        //     template: require('html-webpack-template'),
-        //     inject: false,
-        //     appMountId: 'app'
-        // })
         new webpack.LoaderOptionsPlugin({
             options: {
                 handlebarsLoader: {}
